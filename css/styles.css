@@ -1,0 +1,254 @@
+body {        
+    background-color: #FBAB7E;
+    background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);
+    color: #752c03;    
+    font-family: 'Crimson Text', serif;
+    /* width: 100%;         */
+}
+
+input {
+    background: transparent;
+    color: #752c03;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+i:hover {
+    cursor: pointer;
+    color: #752d035e;
+}
+
+i.fa-cog {
+  animation-name: spinnerOff;
+  animation-duration: 3s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;  
+}
+
+p {
+    font-size: 18px;
+    color: #752c03;
+}
+
+.timerLabel {
+  font-size: 23px;
+}
+
+/* make border smaller */
+/* From 0.04 to 0.02
+From 0.92 to 0.96 */
+.c100:after {
+    /* top: 0.02em !important;
+    left: 0.02em !important;        
+    width: 0.96em !important;
+    height: 0.96em !important;     */
+    background: #f8c985 !important;
+    top: 2%;
+    left: 2%;
+    width: 96%;
+    height: 96%;
+}
+ 
+/* override behavior so items don't go down on hover */
+/* .c100:hover > span {
+    width: 5em !important;
+    line-height: 5em !important;
+    font-size: 0.2em !important;
+  } */
+
+  .c100:hover:after {
+    top: 2%;
+    left: 2%;
+    width: 96%;
+    height: 96%;
+  }
+
+.c100.bigger {
+  /* mínimo de 10px a mais do clockwrapper */ 
+  /* font-size: 380px; */
+  /* font-size: calc(350px * 1.085); */
+  /* width: 28%; */
+  /* padding-top: 25%; */
+  width: 250px;
+  height: 250px;
+  /* dont remove, else fill border wont work */
+  font-size: 250px; 
+  background-color: rgb(224, 214, 214);  
+  box-shadow: 0px 0px 30px 2px rgba(0,0,0,0.5);
+}
+
+  .clockWrapper {
+    /* height: 350px;
+    width: 350px;     */
+    width: 95%;
+    height: 95%;
+    position: absolute;    
+    left: 50%;    
+    top: 50%; 
+    transform: translate(-50%, -50%);     
+    z-index: 1;  
+    border-radius: 100%;
+}
+
+.wrap {
+    overflow: hidden;
+    position: relative;
+    /* width: 350px;
+    height: 350px; */
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;    
+  }
+
+.clock {
+    border-radius: 100%;
+    background: #f8c985;
+    width: 100%;
+    height: 100%;
+    /* font-family: "Montserrat"; */
+    /* border: 5px solid white; */
+    /* box-shadow: inset 2px 3px 8px 0 rgba(0, 0, 0, 0.1); */
+  }
+
+  .tomato:before {
+    content: '';
+		position: absolute;
+		margin: auto;
+		width: 3%;
+		height: 12%;
+		background: #b53838;
+		left: 0;
+		right: 0;
+		top: -12%;
+		z-index: -1;
+		transform: rotate(10deg);
+  }
+
+  .tomato:after {
+    content: '';
+		position: absolute;
+		margin: auto;
+		width: 8%;
+		height: 16%;
+		background: #b53838;
+		left: 0;
+		right: 15%;
+		top: -13%;
+		z-index: -1;
+		transform: rotate(-40deg);
+		border-radius: 100% 30% 50% 0;
+  }
+
+    
+  
+  .hour {
+    /* width: 6px; */
+    /* height: 100px; */    
+    /* width: calc(350px / 58.3);
+    height: calc(350px / 3.5);     */
+    width: 2%;;
+    height: 27%;
+    top: -27%;  
+    position: absolute;       
+    margin: auto;          
+    left: 0;
+    bottom: 0;
+    right: 0;    
+    background: black;
+    background: rgb(112, 53, 27);
+    transform-origin: bottom center;
+    transform: rotate(0deg);
+    /* box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.4); */
+    z-index: 1;
+  }
+  
+  .minute {
+    /* width: 4px; */
+    /* height: 130px; */
+    /* width: calc(350px / 87.5);
+    height: calc(350px / 2.6);       */
+    width: 2%;
+    height: 35%;
+    top: -35%;
+    margin: auto;      
+    position: absolute;    
+    bottom: 0;
+    right: 0;
+    left: 0;
+    /* box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.4); */
+    transform: rotate(90deg);
+    transform-origin: bottom center;    
+    background: rgb(206, 93, 45);    
+    z-index: 1;
+  }
+  
+  .second {    
+    /* width: 2px; */
+    /* height: 90px; */
+    /* width: calc(350px / 175);
+    height: calc(350px / 3.8);             */
+    width: 1%;
+    height: 40%;
+    top: -40%;
+    position: absolute;
+    margin: auto;    
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-radius: 4px;
+    background: #ee2c0a;
+    transform-origin: bottom center;
+    transform: rotate(180deg);
+    z-index: 1;    
+    background: rgb(246,134,87);
+  }
+  
+  .dot {
+        /* width: 12px;
+    height: 12px; */
+    width: calc(350px / 58);
+    height: calc(350px / 58);        
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 100px;
+    border: 2px solid rgb(77, 28, 28);
+    background: white;
+    /* border: 2px solid #1b1b1b;     */
+    margin: auto;
+    z-index: 1;
+  }
+
+  /* remove later */
+  .modal {
+    /* display: block !important;     */
+  } 
+
+  .modal-header {
+    background: rgba(239,148,72, 0.7);
+    border-bottom: 1px solid brown;
+  }
+
+  .close {
+    font-size: 2rem;
+  }
+  
+  /* remove later */
+  .fade:not(.show) {
+    /* opacity: 1 !important; */
+  }
+
+  .modal .modal-content {
+    box-shadow: 0px 0px 21px 1px rgba(0,0,0,0.7);
+    
+  }
+
+  /* @media screen and (min-width: 1000px) { 
+
+  } */
+
+/* @media screen and (min-width:750px) and (max-width:999px){
+  
+} */
