@@ -11,7 +11,7 @@ let currentDate;
 let autoStartSession = window.localStorage.getItem('autoStartSession') ?? false;
 let autoStartBreaks = window.localStorage.getItem('autoStartBreaks') ?? false;
 
-//only store true if notifications were permitted by the user
+//only stored true if notifications were permitted by the user
 let enableNotifications = window.localStorage.getItem('enableNotifications') ?? false;
 
 //long breaks always on 4th
@@ -258,9 +258,9 @@ function playTimer(minutes, seconds, fromDate, sessionOrBreak) {
                 clockState = "session";
 
                 if (autoStartSession == 'true') {                                    
-                    const sessionLengthValue = document.querySelector(".inputSessionTime").value;                                      
-                    playTimer(sessionLengthValue, 0 , currentDate, clockState);
+                    const sessionLengthValue = document.querySelector(".inputSessionTime").value;                                                          
                     updateSessionLabel(sessionOrBreak, false);                    
+                    playTimer(sessionLengthValue, 0 , currentDate, clockState);
                 }   
                 else
                 {
