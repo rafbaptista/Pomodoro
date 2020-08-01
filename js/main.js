@@ -9,18 +9,15 @@ let playTimerInterval;
 let currentDate;
 
 let autoStartSession = window.localStorage.getItem('autoStartSession') ?? false;
-
 let autoStartBreaks = window.localStorage.getItem('autoStartBreaks') ?? false;
 
-//let enableNotifications = window.localStorage.getItem('enableNotifications') ?? false;
-//user must permit every time the page is opened?
+//only store true if notifications were permitted by the user
 let enableNotifications = window.localStorage.getItem('enableNotifications') ?? false;
-
 
 //long breaks always on 4th
 let sessionCount = 0;
 
-//session, short or long break
+//can be session, short or long break
 let clockState;
 
 init();
@@ -30,8 +27,8 @@ function init() {
     initTimerControls();
     preventSelection();    
     initClock();
-    CheckPreferences();
-    RequestNotificationPermission();
+    checkPreferences();
+    requestNotificationPermission();
 }
 
 function initArrows() {
@@ -126,7 +123,7 @@ function initTimerControls() {
         item.addEventListener('click', () => {
             
             if (item.classList.contains('fa-play')) {
-debugger;
+
                 if (isTimerRunning)
                     return;
 
@@ -180,18 +177,12 @@ function percentageTimeSpent(totalTime, timeLeft) {
 //sessionOrBreak -> session, shortBreak or longBreak string
 function playTimer(minutes, seconds, fromDate, sessionOrBreak) {      
     clockState = sessionOrBreak;
-    //we need another memory address in order to calculate it, since our function advanceTime changes fromDate
-    //and if we keep a value of fromDate in a variable, this variable will point to the fromDate and will be changed, because 
-    //it points to fromDate
-    
-    //date we received with another memory address, current date    
+        
+    //older datetime object with different memory address since AdvanceTime() alters fromDate
     let fromDateOld = new Date(
-        fromDate.getFullYear(),
-        //fromDate.getUTCMonth(),
+        fromDate.getFullYear(),        
         fromDate.getMonth(),
-        fromDate.getDate(),
-        //fromDate.getUTCDate(), 
-        //parseInt(fromDate.toString().split(' ')[2]), //do not use getUTCDate since daylight gets things messy sometimes
+        fromDate.getDate(),                
         fromDate.getHours(),
         fromDate.getMinutes(),
         fromDate.getSeconds()        
@@ -226,13 +217,12 @@ function playTimer(minutes, seconds, fromDate, sessionOrBreak) {
             title.innerHTML = `(${timeLeft}) Pomodoro Clock`;
         } 
         else
-        {                         
-            debugger;  
+        {                                     
             title.innerHTML = 'Pomodoro Clock';
             playAudio();              
             pauseTimer();            
             currentDate = new Date();   
-            SendNotification(sessionOrBreak);    
+            sendNotification(sessionOrBreak);    
                         
             //current session has ended, next one will be a short/long break
             if (sessionOrBreak == "session") {
@@ -296,8 +286,6 @@ function refresh() {
 
     //undefined or 'session'
     clockState = undefined; 
-
-
 
     const sessionLengthValue = document.querySelector(".inputSessionTime").value;    
     updateValueOnScreen(timerLeft, "0" + sessionLengthValue + ":00");
@@ -447,7 +435,7 @@ function updateSessionLabel(clockState, timeHasEnded) {
 }
 
 
-function CheckPreferences() {
+function checkPreferences() {
     const items = document.querySelectorAll(".preferences input[type=checkbox]");
     items.forEach(item => {
         item.addEventListener('click', (event) => {                        
@@ -455,14 +443,14 @@ function CheckPreferences() {
             switch (item.id) {
                 case "enableNotifications": {   
                     if (item.checked) { //enable
-                        if (GetNotificationStatus() == 'granted') {
+                        if (getNotificationStatus() == 'granted') {
                             enableNotifications = true;
                         }
                         else 
                         {                   
                             enableNotifications = false;         
                             item.checked = false;
-                            RequestNotificationPermission();                            
+                            requestNotificationPermission();                            
                         }                                                                                                                                                                                                                                                                                                                          
                     }                                                                                                                    
                     break;
@@ -492,7 +480,7 @@ function setPreferencesPermissionBasedOnLocalStorage(item) {
     if (value == 'true' && !item.checked) {
 
         if (item.id == 'enableNotifications') {
-            if (GetNotificationStatus() == 'granted') {
+            if (getNotificationStatus() == 'granted') {
                 item.checked = true;
                 enableNotifications = true;
             }
@@ -505,7 +493,7 @@ function setPreferencesPermissionBasedOnLocalStorage(item) {
     }                                            
 }
 
-function RequestNotificationPermission() {
+function requestNotificationPermission() {
     
     if (Notification.permission != 'granted') {
         Notification.requestPermission().then(permission => {            
@@ -517,24 +505,16 @@ function RequestNotificationPermission() {
     }
 }
 
-function GetNotificationStatus() {
+function getNotificationStatus() {
     return Notification.permission;
 }
 
-                
-function NewNotification(title, bodyText) {
-    const notification = new Notification(title, {
-        icon: 'http://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png',
-        body: bodyText
-    });
-}
-
-function SendNotification(clockState) {
-    let notification = NotificationMessage(clockState);
+function sendNotification(clockState) {
+    let notification = notificationMessage(clockState);
     return new Notification(notification.title, notification.options);    
 }
 
-function NotificationMessage(clockState) {
+function notificationMessage(clockState) {
     let notification = {
         title: 'Pomodoro Clock',
         options: {
