@@ -320,8 +320,8 @@ function refresh()
     //undefined or 'session'
     clockState = undefined;
 
-    const sessionLengthValue = document.querySelector(".inputSessionTime").value;
-    updateScreen(timerLeft, "0" + sessionLengthValue + ":00");
+    const sessionLengthValue = parseInt(document.querySelector(".inputSessionTime").value);
+    updateScreen(timerLeft, sessionLengthValue < 10 ? `0${sessionLengthValue}:00` : `${sessionLengthValue}:00`);
     updateScreen(timerLabel, "Session");
 
     let clockClasses = document.querySelector(".c100").classList;
